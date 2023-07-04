@@ -17,32 +17,21 @@
   </form>
 </template>
 
-<script>
-import { ref } from "vue";
+<script setup>
+import { ref, defineEmits } from "vue";
 
-export default {
-  name: "AddTaskForm",
-  setup(props, { emit }) {
-    const newTaskName = ref("");
+const emit = defineEmits(["submit", "delete"]);
+const newTaskName = ref("");
 
-    const onSubmit = () => {
-      if (newTaskName.value.length !== 0) {
-        emit("submit", newTaskName.value);
-        newTaskName.value = "";
-      }
-    };
+const onSubmit = () => {
+  if (newTaskName.value.length !== 0) {
+    emit("submit", newTaskName.value);
+    newTaskName.value = "";
+  }
+};
 
-    const closeForm = () => {
-      emit("cancel");
-    };
-
-    return {
-      newTaskName,
-      onSubmit,
-      closeForm,
-    };
-  },
+const closeForm = () => {
+  emit("cancel");
 };
 </script>
-
 <style scoped></style>
