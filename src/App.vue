@@ -4,9 +4,7 @@
       <div class="container">
         <div class="flex-container">
           <div class="div">
-            <h1 class="text-4xl font-bold text-gray-800 text-green-700">
-              Список задач
-            </h1>
+            <h1 class="text-4xl text-green-950">Список задач</h1>
           </div>
           <button @click="openForm" class="btn btn-add-task">
             Добавить задачу
