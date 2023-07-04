@@ -10,44 +10,20 @@
             Добавить задачу
           </button>
         </div>
-        <form v-if="isOpenForm" class="form" id="task-form">
-          <input
-            type="text"
-            class="input"
-            placeholder="Введите название"
-            id="task-input"
-            required
-            v-model="taskName"
-          />
-          <button @click="onSubmit" type="submit" class="form__btn">
-            Добавить
-          </button>
-          <button @click="closeForm" type="submit" class="form__btn">
-            Отмена
-          </button>
-        </form>
+        <AddTaskForm
+          v-if="isOpenForm"
+          @submit="onSubmit"
+          @cancel="closeForm"
+        ></AddTaskForm>
         <ul v-if="tasks.length > 0" class="task-list">
-          <li v-for="(task, ind) in tasks" :key="ind" class="task-item">
-            <div class="task-item__header">
-              <div class="left-filed">
-                <input
-                  @click="handleCheck(task)"
-                  :checked="task.checked"
-                  type="checkbox"
-                  class="task-item__checkbox mr-2"
-                />
-                <span
-                  :class="{ strikethrough: task.checked }"
-                  class="task-name font-medium"
-                  >{{ task.name }}</span
-                >
-              </div>
-              <button @click="deleteTask(ind)">Удалить</button>
-            </div>
-            <div class="task-item__footer">
-              <div class="task-item__date">{{ task.date }}</div>
-            </div>
-          </li>
+          <TaskItem
+            v-for="(task, ind) in tasks"
+            :key="ind"
+            :index="ind"
+            :task="task"
+            @handleCheck="handleCheck"
+            @deleteTask="deleteTask"
+          ></TaskItem>
         </ul>
         <div v-else class="message-block">Список задач пуст</div>
       </div>
@@ -59,13 +35,14 @@
 import { ref } from "vue";
 import { saveToLocalStorage, getFromLocalStorage } from "@/localstorage";
 import { getCurrentDate } from "@/utils";
+import AddTaskForm from "@/components/AddTaskForm";
+import TaskItem from "@/components/TaskItem";
 
 export default {
   name: "App",
-  components: {},
+  components: { AddTaskForm, TaskItem },
   setup() {
     const isOpenForm = ref(false);
-    const taskName = ref("");
     const tasks = ref(getFromLocalStorage("tasks") || []);
 
     const openForm = () => {
@@ -76,10 +53,10 @@ export default {
       isOpenForm.value = false;
     };
 
-    const onSubmit = () => {
-      if (taskName.value.length !== 0) {
+    const onSubmit = (newTaskName) => {
+      if (newTaskName.length !== 0) {
         tasks.value.push({
-          name: taskName.value,
+          name: newTaskName,
           checked: false,
           date: getCurrentDate(),
         });
@@ -101,7 +78,6 @@ export default {
 
     return {
       isOpenForm,
-      taskName,
       tasks,
       deleteTask,
       handleCheck,
