@@ -1,5 +1,5 @@
 <template>
-  <form class="form" id="task-form">
+  <form class="form py-8" id="task-form">
     <input
       type="text"
       class="input"
