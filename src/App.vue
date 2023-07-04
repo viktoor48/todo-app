@@ -6,7 +6,7 @@
           <div class="div">
             <h1 class="text-4xl text-green-950">Список задач</h1>
           </div>
-          <button @click="openForm" class="btn btn-add-task">
+          <button @click="openForm" class="text-xl btn btn-add-task">
             Добавить задачу
           </button>
         </div>

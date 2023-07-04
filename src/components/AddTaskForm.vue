@@ -1,15 +1,19 @@
 <template>
-  <form class="form py-8" id="task-form">
+  <form class="form p-2 my-4 border rounded-lg" id="task-form">
     <input
       type="text"
-      class="input"
+      class="input outline-none"
       placeholder="Введите название"
       id="task-input"
       required
       v-model="newTaskName"
     />
-    <button @click="onSubmit" type="button" class="form__btn">Добавить</button>
-    <button @click="closeForm" type="button" class="form__btn">Отмена</button>
+    <button @click="onSubmit" type="button" class="text-base form__btn">
+      Добавить
+    </button>
+    <button @click="closeForm" type="button" class="text-base form__btn">
+      Отмена
+    </button>
   </form>
 </template>
 
