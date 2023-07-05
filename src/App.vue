@@ -31,62 +31,45 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref } from "vue";
 import { saveToLocalStorage, getFromLocalStorage } from "@/localstorage";
 import { getCurrentDate } from "@/utils";
 import AddTaskForm from "@/components/AddTaskForm";
 import TaskItem from "@/components/TaskItem";
 
-export default {
-  name: "App",
-  components: { AddTaskForm, TaskItem },
-  setup() {
-    const isOpenForm = ref(false);
-    const tasks = ref(getFromLocalStorage("tasks") || []);
+const isOpenForm = ref(false);
+const tasks = ref(getFromLocalStorage("tasks") || []);
 
-    const openForm = () => {
-      isOpenForm.value = true;
-    };
+const openForm = () => {
+  isOpenForm.value = true;
+};
 
-    const closeForm = () => {
-      isOpenForm.value = false;
-    };
+const closeForm = () => {
+  isOpenForm.value = false;
+};
 
-    const onSubmit = (newTaskName) => {
-      if (newTaskName.length !== 0) {
-        tasks.value.push({
-          name: newTaskName,
-          checked: false,
-          date: getCurrentDate(),
-        });
-        saveToLocalStorage("tasks", tasks.value);
-      }
-    };
+const onSubmit = (newTaskName) => {
+  if (newTaskName.length !== 0) {
+    tasks.value.push({
+      name: newTaskName,
+      checked: false,
+      date: getCurrentDate(),
+    });
+    saveToLocalStorage("tasks", tasks.value);
+  }
+};
 
-    const handleCheck = (task) => {
-      task.checked = !task.checked;
-      saveToLocalStorage("tasks", tasks.value);
-    };
+const handleCheck = (task) => {
+  task.checked = !task.checked;
+  saveToLocalStorage("tasks", tasks.value);
+};
 
-    const deleteTask = (taskInd) => {
-      tasks.value = tasks.value.filter((task, i) => {
-        return i !== taskInd;
-      });
-      saveToLocalStorage("tasks", tasks.value);
-    };
-
-    return {
-      isOpenForm,
-      tasks,
-      deleteTask,
-      handleCheck,
-      onSubmit,
-      openForm,
-      closeForm,
-    };
-  },
-  mounted() {},
+const deleteTask = (taskInd) => {
+  tasks.value = tasks.value.filter((task, i) => {
+    return i !== taskInd;
+  });
+  saveToLocalStorage("tasks", tasks.value);
 };
 </script>
 

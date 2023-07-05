@@ -11,6 +11,8 @@
       id="task-input"
       required
       v-model="newTaskName"
+      ref="task-input"
+      v-focus
     />
     <button type="submit" class="text-base form__btn">Добавить</button>
     <button @click="closeForm" type="button" class="text-base form__btn">
